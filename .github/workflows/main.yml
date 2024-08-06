@@ -24,7 +24,7 @@ jobs:
           token=$(echo  | jq -r '.access_token')
           echo "::set-output name=token::"
 
-  run-on-python-file-commit:
+  execute-quick-command:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,9 +32,16 @@ jobs:
         uses: actions/checkout@v2
         
       - name: RQC1-post
+        id: execute_rqc
         run: |
           token="${{ steps.get_token.outputs.token }}"
-          curl -s -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/is-it-vulnerable" \
-          -H "Authorization: Bearer " \
+          response=$(curl -s -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/is-it-vulnerable" \
+          -H "Authorization: Bearer $token" \
           -H "Content-Type: application/json" \
-          -d "{\"input_data\": \"Hi, how are you? This is an example of how to create Remote Quick Command.\"}"
+          -d "{\"input_data\": \"Hi, how are you? This is an example of how to create Remote Quick Command.\"}")
+          echo "response=$response"
+          echo "::set-output name=api_response::$response"
+
+      - name: Display API Response
+        run: |
+          echo "API Response: ${{ steps.execute_rqc.outputs.api_response }}"
