@@ -36,8 +36,7 @@ jobs:
         run: |
           token="${{ steps.get_token.outputs.token }}"
           response=$(curl -s -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/is-it-vulnerable" \
-          #intentional typo below \
-          -H "Authorization: Bearer $token" \
+          -H "Authorizationx: Bearer $token" \
           -H "Content-Type: application/json" \
           -d "{\"input_data\": \"Hi, how are you? This is an example of how to create Remote Quick Command.\"}")
           echo "response=$response"
