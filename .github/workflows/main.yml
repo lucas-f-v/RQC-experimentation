@@ -35,12 +35,25 @@ jobs:
         id: execute_rqc
         run: |
           token="${{ steps.get_token.outputs.token }}"
-          response=$(curl -s -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/is-it-vulnerable" \
-          -H "Authorizationx: Bearer $token" \
+          response=$(curl -s -o response_body.txt -w "%{http_code}" -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/is-it-vulnerable" \
+          -H "Authorization: Bearer " \
           -H "Content-Type: application/json" \
           -d "{\"input_data\": \"Hi, how are you? This is an example of how to create Remote Quick Command.\"}")
-          echo "response=$response"
-          echo "::set-output name=api_response::$response"
+          status_code=$(echo  | tail -n1)
+          response_body=$(cat response_body.txt)
+          echo "status_code="
+          echo "response_body="
+          echo "::set-output name=status_code::"
+          echo "::set-output name=api_response::"
+
+      - name: Check API Response Status
+        run: |
+          if [ "${{ steps.execute_rqc.outputs.status_code }}" -eq 200 ]; then
+            echo "Request was successful!"
+          else
+            echo "Request failed with status code ${{ steps.execute_rqc.outputs.status_code }}"
+            exit 1
+          fi
 
       - name: Display API Response
         run: |
