@@ -35,14 +35,20 @@ jobs:
         id: execute_rqc
         run: |
           token="${{ steps.get_token.outputs.token }}"
-          response=$(curl -s -o response_body.txt -w "%{http_code}" -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/is-it-vulnerable" \
-          -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwNzQ4NDY2LTcyNmItNDgwMS04ODI1LTM2OTU3MjUzNWI3NyIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkX3YyIjoiMDFIMzBDSlE1Ujc0MzVSVjBKQUpIRFJaNkUiLCJhY2NvdW50X25hbWUiOiJTdGFja3Nwb3QiLCJhY2NvdW50X3NsdWciOiJzdGFja3Nwb3QiLCJhY2NvdW50X3R5cGUiOiJFTlRFUlBSSVNFIiwiYXR0cmlidXRlcyI6e30sImF1ZCI6WyJmNDA5NmJmYy03ZjdjLTQ0MDEtODA2Zi00MTFiMTliZDA5NTkiXSwiYXpwIjoiZTVjODA4MDgtNjUxMi00YjhmLWFhMjQtZWQzMDJmZmJmNTA2IiwiY2xpZW50SWQiOiJmNDA5NmJmYy03ZjdjLTQ0MDEtODA2Zi00MTFiMTliZDA5NTkiLCJjbGllbnRfaWQiOiJmNDA5NmJmYy03ZjdjLTQ0MDEtODA2Zi00MTFiMTliZDA5NTkiLCJlbWFpbCI6Imx1Y2FzLnZpY2Vuem90dG9Ac3RhY2tzcG90LmNvbSIsImV4cCI6MTcyMjk4MTIwOCwiZmFtaWx5X25hbWUiOiJWaWNlbnpvdHRvIiwiZ2l2ZW5fbmFtZSI6Ikx1Y2FzIiwiaWF0IjoxNzIyOTgwMDA4LCJpc3MiOiJodHRwczovL2F1dGguc3RhY2tzcG90LmNvbS9zdGFja3Nwb3Qvb2lkYyIsImp0aSI6IlN6Mk5ZVXQ3cXN3MlhGNzUyYzhmZm9rczd4MVJtVWRRelYwczVJbDdXbTdtdjRaVm5OcjUwcXdGU1V4YnBKOGQiLCJtYXhfYWdlIjoxNzIzMDA4ODA4LCJuYW1lIjoiTHVjYXMgVmljZW56b3R0byIsIm5iZiI6MTcyMjk4MDAwOCwicHJlZmVycmVkX3VzZXJuYW1lIjoibHVjYXMudmljZW56b3R0b0BzdGFja3Nwb3QuY29tIiwicmVhbG0iOiJzdGFja3Nwb3QiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWlfZGV2ZWxvcGVyIiwiZGV2ZWxvcGVyIiwiYWlfYWRtaW4iLCJhaV9nZW5haSJdfSwicm9sZXMiOlsiYWlfZGV2ZWxvcGVyIiwiZGV2ZWxvcGVyIiwiYWlfYWRtaW4iLCJhaV9nZW5haSJdLCJzY29wZSI6InJvbGVzIGF0dHJpYnV0ZXMgcHJvZmlsZSBlbWFpbCIsInN1YiI6ImY0MDk2YmZjLTdmN2MtNDQwMS04MDZmLTQxMWIxOWJkMDk1OSIsInRlbmFudCI6InN0YWNrc3BvdCIsInRva2VuVHlwZSI6IkNMSUVOVF9TRVJWSUNFX0FDQ09VTlQiLCJ0b2tlbl90eXBlIjoiQ0xJRU5UX1BFUlNPTkFMIiwidXNlcm5hbWUiOiJsdWNhcy52aWNlbnpvdHRvQHN0YWNrc3BvdC5jb20ifQ.rXftS3zUrBDEXOnbQmq0vvJ5szS6el4e97_ircamMjVBE5z3JZjAWtfKsyfyzg_ba2NvA-7Ad1hf9Aks8F_bDrPwX3Txl789s3b0RLs_7mFptVPX6rRI1AB_m62vm1MbyU3YGKjZVpBTOeE3qEVc4ghrDmh5ngDhwdPjSAg_vVBLzsnxZZKXXxtkA1xIonlNFpSadHRA8i6pRUUiZxaT9MXxoHJwIJ7ndoHTDEYRos17E7oUtXZDrNBlEf5XPyhXX4oB5m9a5gfzPcTsWRAduEUQAQyWEoYAh18ZrXrwPVIJ3GdcX5C_OSWC07jsdnKdKlr271WGdlf5304a8Z4E2nyBHWZI-wdEbOp_Q82x8IYmhGXci5XTEcxIN1NOywvsks9NNQauDO0w26YTXE_ortraXHBkthbeXNa2L8F8FQUjlJVyAdIBq6uknBt0eYWhKW4JqisKgIjvGgKR5dYZY3aplFWMaCfr0wldie8gnz-3JbjT4jeaLjWiImGT2KNWNEJenb1a_mmhD6HyYeEh5hWy9hIHwCB0EU6A7kbTiq9ILXEie-wEK8qKtFfcm04-pB8cu-2m-YkJuFT6cUKWwYo4aiHsX-K_kptK8QTGXVUtjiMswcwU4-ENhpawjypC7SnEHbXc-w4rw3Mjnj5Fti6_gqyotHMShw7Ra3R2DCM" \
+          response=$(curl -s -w "\n%{http_code}" -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/is-it-vulnerable" \
+          -H "Authorization: Bearer $token" \
           -H "Content-Type: application/json" \
           -d "{\"input_data\": \"Hi, how are you? This is an example of how to create Remote Quick Command.\"}")
-          status_code=$(echo $response | tail -n1)
-          response_body=$(cat response_body.txt)
+
+          # Extract the status code and response body
+          status_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | sed '$d')
+
+          # Print the status code and response body
           echo "status_code=$status_code"
           echo "response_body=$response_body"
+
+          # Set GitHub Actions outputs
           echo "::set-output name=status_code::$status_code"
           echo "::set-output name=api_response::$response_body"
 
