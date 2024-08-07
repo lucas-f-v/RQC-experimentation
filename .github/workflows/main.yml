@@ -29,7 +29,7 @@ jobs:
         id: execute_rqc
         run: |
           token="${{ steps.get_token.outputs.token }}"
-          response=$(curl -s -w "\n%{http_code}" -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/lfv-code-sec-analysis" \
+          response=$(curl -s -w "\n%{http_code}" -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/is-it-vulnerable" \
           -H "Authorization: Bearer $token" \
           -H "Content-Type: application/json" \
           -d "{\"input_data\": \"Hi, how are you? This is an example of how to create Remote Quick Command.\"}")
@@ -80,5 +80,5 @@ jobs:
         run: |
           response="${{ steps.get_execution_status.outputs.response }}"
           echo "Execution Status FULL Response: $response"
-          response_field=$(echo "$response" | jq -r '.steps[0].step_result.result')
+          response_field=$(echo '$response' | jq -r '.result')
           echo "Execution Status Result: $response_field"
