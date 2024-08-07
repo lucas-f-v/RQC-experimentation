@@ -82,3 +82,17 @@ jobs:
           echo "Execution Status FULL Response: $response"
           response_field=$(echo "$response" | grep -o '"result":"[^"]*' | sed 's/"result":"//')
           echo "Execution Status Result: $response_field"
+          echo "::set-output name=response_field::$response_field"
+      - name: ddd
+        id: ddd
+        run: |
+          response_field='${{ steps.extract-llm-response.outputs.response_field }}'
+
+          if [ "$response_field" != "true" ]; then
+            echo "Execution Status Result: $response_field"
+            echo "Pipeline will break as the response is not true."
+            exit 1
+          else
+            echo "Execution Status Result: $response_field"
+            echo "Pipeline continues as the response is true."
+          fi
