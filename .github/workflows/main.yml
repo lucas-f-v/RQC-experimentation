@@ -20,7 +20,7 @@ jobs:
           --header 'Content-Type: application/x-www-form-urlencoded' \
           --data-urlencode 'client_id=f4096bfc-7f7c-4401-806f-411b19bd0959' \
           --data-urlencode 'grant_type=client_credentials' \
-          --data-urlencode 'client_secret=S0P5rH66Sd8mh26K5RQnub0o21YaJDyJL0Mb6VRCXe84jpZAsbqi85SI5MgDu07i')
+          --data-urlencode 'client_secret=UTY6zw5iUTY12989210fwDFND9r2A0RjTK0REXBRMYLkWD3LDD2In6KO07LEQeG4')
           echo "response=$response"
           token=$(echo $response | grep -oP '(?<="access_token":")[^"]*')
           echo "::set-output name=token::$token"
