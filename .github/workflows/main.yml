@@ -8,6 +8,7 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -21,9 +22,9 @@ jobs:
           --data-urlencode 'grant_type=client_credentials' \
           --data-urlencode 'client_secret=S0P5rH66Sd8mh26K5RQnub0o21YaJDyJL0Mb6VRCXe84jpZAsbqi85SI5MgDu07i')
           echo "response=$response"
-          token=$(echo $response | jq -r '.access_token')
+          token=$(echo $response | grep -oP '(?<="access_token":")[^"]*')
           echo "::set-output name=token::$token"
-        
+
       - name: RQC1-post
         id: execute_rqc
         run: |
@@ -32,19 +33,15 @@ jobs:
           -H "Authorization: Bearer $token" \
           -H "Content-Type: application/json" \
           -d "{\"input_data\": \"Hi, how are you? This is an example of how to create Remote Quick Command.\"}")
-
           # Extract the status code and response body
           status_code=$(echo "$response" | tail -n1)
           response_body=$(echo "$response" | sed '$d')
-
           # Extract execution_id from the response body
-          execution_id=$(echo "$response_body" | jq -r '.execution_id')
-
+          execution_id=$(echo "$response_body" | grep -oP '(?<="execution_id":")[^"]*')
           # Print the status code, response body, and execution_id
           echo "status_code=$status_code"
           echo "response_body=$response_body"
           echo "execution_id=$execution_id"
-
           # Set GitHub Actions outputs
           echo "::set-output name=status_code::$status_code"
           echo "::set-output name=api_response::$response_body"
@@ -69,6 +66,5 @@ jobs:
           execution_id="${{ steps.execute_rqc.outputs.execution_id }}"
           response=$(curl -s -X GET "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/callback/$execution_id" \
           -H "Authorization: Bearer $token")
-
           # Print the response
           echo "Execution Status Response: $response"
