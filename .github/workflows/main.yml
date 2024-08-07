@@ -68,7 +68,7 @@ jobs:
             # Print the response
             echo "Execution Status Response: $response"
             status=$(echo "$response" | grep -oP '(?<="status":")[^"]*')
-            if [ "$status" != "RUNNING" ]; then
+            if [ "$status" != "RUNNING" ] && [ "$status" != "CREATED" ]; then
               break
             fi
             echo "Execution is still running, checking again in 5 seconds..."
