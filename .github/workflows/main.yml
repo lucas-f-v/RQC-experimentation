@@ -83,8 +83,8 @@ jobs:
           response_field=$(echo "$response" | grep -o '"result":"[^"]*' | sed 's/"result":"//')
           echo "Execution Status Result: $response_field"
           echo "::set-output name=response_field::$response_field"
-      - name: ddd
-        id: ddd
+      - name: Is it Secure?
+        id: secureness-check
         run: |
           response_field='${{ steps.extract-llm-response.outputs.response_field }}'
 
