@@ -78,7 +78,7 @@ jobs:
       - name: Extract LLM Response
         id: extract-llm-response
         run: |
-          response="${{ steps.get_execution_status.outputs.response }}"
+          response='${{ steps.get_execution_status.outputs.response }}'
           echo "Execution Status FULL Response: $response"
           response_field=$(echo '$response' | jq -r '.result')
           echo "Execution Status Result: $response_field"
