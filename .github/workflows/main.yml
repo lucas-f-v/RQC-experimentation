@@ -60,7 +60,7 @@ jobs:
       - name: Get Execution Status
         run: |
           token="${{ steps.get_token.outputs.token }}"
-          execution_id="${{ steps.execute_rqc.outputs.response_body }}"
+          execution_id="${{ steps.execute_rqc.outputs.api_response }}"
           response=$(curl -s -X GET "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/callback/$execution_id" \
           -H "Authorization: Bearer $token")
           # Print the response
