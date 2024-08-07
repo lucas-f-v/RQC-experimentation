@@ -43,12 +43,12 @@ jobs:
           # Print the status code, response body, and execution_id
           echo "status_code=$status_code"
           echo "response_body=$response_body"
-          echo "execution_id=$response_body"
+          echo "execution_id=$execution_id"
 
           # Set GitHub Actions outputs
           echo "::set-output name=status_code::$status_code"
           echo "::set-output name=api_response::$response_body"
-          echo "::set-output name=execution_id::$response_body"
+          echo "::set-output name=execution_id::$execution_id"
 
       - name: Check API Response Status
         run: |
