@@ -57,11 +57,20 @@ jobs:
         run: |
           echo "API Response: ${{ steps.execute_rqc.outputs.api_response }}"
 
-      - name: Get Execution Status
-        run: |
-          token="${{ steps.get_token.outputs.token }}"
-          execution_id="${{ steps.execute_rqc.outputs.api_response }}"
-          response=$(curl -s -X GET "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/callback/$execution_id" \
-          -H "Authorization: Bearer $token")
-          # Print the response
-          echo "Execution Status Response: $response"
+          - name: Get Execution Status
+          id: get_execution_status
+          run: |
+            token="${{ steps.get_token.outputs.token }}"
+            execution_id="${{ steps.execute_rqc.outputs.execution_id }}"
+            while true; do
+              response=$(curl -s -X GET "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/callback/$execution_id" \
+              -H "Authorization: Bearer $token")
+              # Print the response
+              echo "Execution Status Response: $response"
+              status=$(echo "$response" | grep -oP '(?<="status":")[^"]*')
+              if [ "$status" != "RUNNING" ]; then
+                break
+              fi
+              echo "Execution is still running, checking again in 5 seconds..."
+              sleep 5
+            done
