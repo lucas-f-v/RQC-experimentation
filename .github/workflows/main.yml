@@ -6,7 +6,7 @@ on:
       - '**/*.py'
 
 jobs:
-  get-bearer-token:
+  main:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -37,13 +37,18 @@ jobs:
           status_code=$(echo "$response" | tail -n1)
           response_body=$(echo "$response" | sed '$d')
 
-          # Print the status code and response body
+          # Extract execution_id from the response body
+          execution_id=$(echo "$response_body" | jq -r '.execution_id')
+
+          # Print the status code, response body, and execution_id
           echo "status_code=$status_code"
           echo "response_body=$response_body"
+          echo "execution_id=$execution_id"
 
           # Set GitHub Actions outputs
           echo "::set-output name=status_code::$status_code"
           echo "::set-output name=api_response::$response_body"
+          echo "::set-output name=execution_id::$execution_id"
 
       - name: Check API Response Status
         run: |
@@ -57,3 +62,13 @@ jobs:
       - name: Display API Response
         run: |
           echo "API Response: ${{ steps.execute_rqc.outputs.api_response }}"
+
+      - name: Get Execution Status
+        run: |
+          token="${{ steps.get_token.outputs.token }}"
+          execution_id="${{ steps.execute_rqc.outputs.execution_id }}"
+          response=$(curl -s -X GET "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/callback/$execution_id" \
+          -H "Authorization: Bearer $token")
+
+          # Print the response
+          echo "Execution Status Response: $response"
