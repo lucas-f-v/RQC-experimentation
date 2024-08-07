@@ -74,3 +74,5 @@ jobs:
             echo "Execution is still running, checking again in 5 seconds..."
             sleep 5
           done
+          response_field=$(echo "$response" | grep -oP '(?<="response":")[^"]*')
+          echo "Execution Status Response: $response_field"
