@@ -74,9 +74,11 @@ jobs:
             echo "Execution is still running, checking again in 5 seconds..."
             sleep 5
           done
+          echo "::set-output name=response::$response"
       - name: Extract LLM Response
         id: extract-llm-response
         run: |
+          response="${{ steps.get_execution_status.outputs.response }}"
           echo "Execution Status Response: $response"
           response_field=$(echo "$response" | jq -r '.steps[0].step_result.answer')
           echo "Execution Status Response: $response_field"
