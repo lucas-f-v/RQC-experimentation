@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '**/*.py'
+  workflow_dispatch:
 
 jobs:
   main:
@@ -33,14 +34,13 @@ jobs:
           git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD)
       
           # Get the most recent Python file from the latest commit
-          pyfile_name=$(git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD) | grep '\.py$' | tail -n 1)
+          pyfile_name=$(git show --name-only --pretty="" $(git rev-parse HEAD) | grep '\.py$' | tail -n 1)
       
           # Debug: Show the extracted Python file name
           echo "Extracted Python file name: $pyfile_name"
       
           # Store the Python file name in the environment variable
           echo "pyfile_name=$pyfile_name" >> $GITHUB_ENV
-          
       - name: Read and Transform Python File Content
         id: transform_to_json
         run: |
