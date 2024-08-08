@@ -25,16 +25,16 @@ jobs:
         run: |
           # Read the content of the Python file
           python_code=$(cat $pyfile_name)
-
+      
           # Sanitize the Python code
           sanitized_code=$(echo "$python_code" | jq -Rs .)
-
+      
           # Create the JSON structure
-          json_data=$(jq -n --arg code "$sanitized_code" '{"input_data": $code}')
-
+          json_data=$(echo "{\"input_data\": $sanitized_code}" | jq -c .)
+      
           # Store the JSON data in an environment variable
           echo "json_data=$json_data" >> $GITHUB_ENV
-
+          
       - name: Display JSON Data
         run: |
           echo "Transformed JSON data: $json_data"
