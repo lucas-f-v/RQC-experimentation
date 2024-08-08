@@ -32,7 +32,7 @@ jobs:
           response=$(curl -s -w "\n%{http_code}" -X POST "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/create-execution/is-it-vulnerable" \
           -H "Authorization: Bearer $token" \
           -H "Content-Type: application/json" \
-          -d "{\"input_data\": \"acl=private"}")
+          -d "{\"input_data\": \"acl=private\"}")
           # Extract the status code and response body
           status_code=$(echo "$response" | tail -n1)
           response_body=$(echo "$response" | sed '$d')
