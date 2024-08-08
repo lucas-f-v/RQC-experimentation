@@ -13,6 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Extract File from Commit?
+        run: |
+          #get file name
+          pyfile_name=$(git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD) | grep '\.py$' | tail -n 1)
+          echo "pyfile_name=$pyfile_name" >> $GITHUB_ENV
+
+          #extract code from file
+          extracted_code=$(cat update-ks.py)
+          echo "extracted_code<<EOF" >> $GITHUB_ENV
+          echo "$extracted_code" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "$extracted_code"
+          
       - name: Get Bearer Token
         id: get_token
         run: |
@@ -83,20 +96,7 @@ jobs:
           response_field=$(echo "$response" | grep -o '"result":"[^"]*' | sed 's/"result":"//')
           echo "Execution Status Result: $response_field"
           echo "::set-output name=response_field::$response_field"
-      - name: Extract Code from Commit?
-        run: |
-          echo "hello i am mister frog"
-      - name: Read Python file content
-        id: read_file
-        run: |
-          extracted_code=$(cat update-ks.py)
-          echo "extracted_code<<EOF" >> $GITHUB_ENV
-          echo "$extracted_code" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-    
-      - name: Display extracted code
-        run: |
-          echo "$extracted_code"
+
 
       - name: Is it Secure?
         id: secureness-check
