@@ -89,7 +89,7 @@ jobs:
       - name: Read Python file content
         id: read_file
         run: |
-          extracted_code=$(cat script.py)
+          extracted_code=$(cat update-ks.py)
           echo "extracted_code<<EOF" >> $GITHUB_ENV
           echo "$extracted_code" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
