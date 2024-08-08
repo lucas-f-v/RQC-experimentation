@@ -9,7 +9,7 @@ target_type = "KNOWLEDGE_SOURCE"
 expiration = 600
 file_path = "/Users/lucas/Desktop/projects/demos/weather-dot-gov-api.json"
 
-# Step 1: Get the upload data
+# Step 01: Get the upload data
 url = 'https://genai-code-buddy-api.stackspot.com/v1/file-upload/form'
 headers = {
     'Content-Type': 'application/json',
