@@ -19,6 +19,7 @@ jobs:
           # Get the most recent Python file from the latest committ
           pyfile_name=$(git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD) | grep '\.py$' | tail -n 1)
           echo "pyfile_name=$pyfile_name" >> $GITHUB_ENV
+          echo "$pyfile_name"
 
       - name: Read and Transform Python File Content
         id: transform_to_json
@@ -34,7 +35,7 @@ jobs:
       
           # Store the JSON data in an environment variable
           echo "json_data=$json_data" >> $GITHUB_ENV
-          
+
       - name: Display JSON Data
         run: |
           echo "Transformed JSON data: $json_data"
