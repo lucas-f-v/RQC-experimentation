@@ -132,16 +132,16 @@ jobs:
           echo "::set-output name=response_field::$response_field"
 
 
-      - name: Is it Secure?
-        id: secureness-check
+      - name: Is it vulnerable?
+        id: vulnerability-check
         run: |
           response_field='${{ steps.extract-llm-response.outputs.response_field }}'
 
           if [ "$(echo "$response_field" | tr '[:upper:]' '[:lower:]')" != "true" ]; then
             echo "Execution Status Result: $response_field"
-            echo "Pipeline will break as the response is not true."
+            echo "Pipeline will break as there are vulnerabilities."
             exit 1
           else
             echo "Execution Status Result: $response_field"
-            echo "Pipeline continues as the response is true."
+            echo "Pipeline continues as the code is not vulnerable."
           fi
