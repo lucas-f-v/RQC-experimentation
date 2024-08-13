@@ -24,7 +24,6 @@ jobs:
           # Debug: Show the details of the latest commit
           echo "Latest commit details:"
           git show --name-only --oneline $(git rev-parse HEAD)
-          git show $(git rev-parse HEAD)
           # Debug: Show all files in the repository
           echo "All files in the repository:"
           ls -R
