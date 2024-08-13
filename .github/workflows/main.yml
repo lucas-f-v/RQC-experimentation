@@ -128,7 +128,7 @@ jobs:
           response='${{ steps.get_execution_status.outputs.response }}'
           echo "Execution Status FULL Response: $response"
           response_field=$(echo "$response" | grep -o '"result":"[^"]*' | sed 's/"result":"//')
-          echo "Execution Status Result: $response_field"
+          echo "Execution Status Result:$response_field"
           echo "::set-output name=response_field::$response_field"
 
 
