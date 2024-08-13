@@ -27,7 +27,7 @@ print(response)
 print(response.json)
 upload_data = response.json()
 
-# Print the file upload idddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+# Print the file upload iddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 print(f"file upload id = {upload_data['id']}")
 
 # Step 2: Upload the file

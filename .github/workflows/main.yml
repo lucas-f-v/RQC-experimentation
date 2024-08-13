@@ -34,7 +34,8 @@ jobs:
           git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD)
       
           # Get the most recent Python file from the latest commit
-          pyfile_name=$(git show --name-only --pretty="" $(git rev-parse HEAD) | grep '\.py$' | tail -n 1)
+          # Get the most recently modified Python file from the latest commit
+          pyfile_name=$(git show --name-only --pretty="" $(git rev-parse HEAD) | grep '\.py$' | xargs -I {} stat -c "%Y %n" {} | sort -n | tail -n 1 | cut -d' ' -f2-)
       
           # Debug: Show the extracted Python file name
           echo "Extracted Python file name: $pyfile_name"
