@@ -107,8 +107,8 @@ jobs:
       - name: Get Execution Status
         id: get_execution_status
         run: |
-          token="${{ steps.get_token.outputs.token }}"
-          execution_id="${{ steps.execute_rqc.outputs.api_response }}"
+          token="${{steps.get_token.outputs.token}}"
+          execution_id="${{steps.execute_rqc.outputs.api_response}}"
           while true; do
             response=$(curl -s -X GET "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/callback/$execution_id" \
             -H "Authorization: Bearer $token")
@@ -125,7 +125,7 @@ jobs:
       - name: Extract LLM Response
         id: extract-llm-response
         run: |
-          response='${{ steps.get_execution_status.outputs.response }}'
+          response='${{steps.get_execution_status.outputs.response}}'
           echo "Execution Status FULL Response: $response"
           response_field=$(echo "$response" | grep -o '"result":"[^"]*' | sed 's/"result":"//')
           echo "Execution Status Result:$response_field"
