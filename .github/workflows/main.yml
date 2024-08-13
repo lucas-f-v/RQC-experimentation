@@ -112,7 +112,7 @@ jobs:
           while true; do
             response=$(curl -s -X GET "https://genai-code-buddy-api.stackspot.com/v1/quick-commands/callback/$execution_id" \
             -H "Authorization: Bearer $token")
-            # Print the response
+            # Print the response 
             echo "Execution Status Response: $response"
             status=$(echo "$response" | grep -oP '(?<="status":")[^"]*')
             if [ "$status" != "RUNNING" ] && [ "$status" != "CREATED" ]; then
@@ -135,7 +135,7 @@ jobs:
       - name: Is it vulnerable?
         id: vulnerability-check
         run: |
-          response_field='${{ steps.extract-llm-response.outputs.response_field }}'
+          response_field='${{steps.extract-llm-response.outputs.response_field}}'
 
           if [ "$(echo "$response_field" | tr '[:upper:]' '[:lower:]')" != "true" ]; then
             echo "Execution Status Result: $response_field"
