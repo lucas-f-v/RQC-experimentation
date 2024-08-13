@@ -137,7 +137,7 @@ jobs:
         run: |
           response_field='${{steps.extract-llm-response.outputs.response_field}}'
 
-          if [ "$(echo "$response_field" | tr '[:upper:]' '[:lower:]')" != "true" ]; then
+          if [ "$(echo "$response_field" | tr '[:upper:]' '[:lower:]')" = "true" ]; then
             echo "Execution Status Result: $response_field"
             echo "Pipeline will break as there are vulnerabilities."
             exit 1
