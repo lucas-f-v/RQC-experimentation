@@ -35,7 +35,7 @@ jobs:
       
           # Get the most recent Python file from the latest commit
           # Get the most recently modified Python file from the latest commit
-          pyfile_name=$(git show --name-only --pretty="" $(git rev-parse HEAD) | grep '\.py$' | xargs -I {} stat -c "%Y %n" {} | sort -n | tail -n 1 | cut -d' ' -f2-)
+          pyfile_name=$(git show --name-only --pretty="" $(git rev-parse HEAD) | grep '\.py$' | xargs -I {} stat -c "%Y %n" {} | sort -n | head -n 1 | cut -d' ' -f2-)
       
           # Debug: Show the extracted Python file name
           echo "Extracted Python file name: $pyfile_name"
