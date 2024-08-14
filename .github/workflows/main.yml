@@ -24,6 +24,7 @@ jobs:
           # Debug: Show the details of the latest commit
           echo "Latest commit details:"
           git show --name-only --oneline $(git rev-parse HEAD)
+          
           # Debug: Show all files in the repository
           echo "All files in the repository:"
           ls -R
@@ -33,7 +34,6 @@ jobs:
           git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD)
       
           # Get the most recent Python file from the latest commit
-          # Get the most recently modified Python file from the latest commit
           pyfile_name=$(git show --name-only --pretty="" $(git rev-parse HEAD) | grep '\.py$' | xargs -I {} stat -c "%Y %n" {} | sort -n | head -n 1 | cut -d' ' -f2-)
       
           # Debug: Show the extracted Python file name
@@ -41,6 +41,18 @@ jobs:
       
           # Store the Python file name in the environment variable
           echo "pyfile_name=$pyfile_name" >> $GITHUB_ENV
+          
+          echo "Extracted Python file name: ${{ env.pyfile_name }}"
+  
+      - name: Run tests on the changed Python file
+        run: |
+          if [ -n "${{ env.pyfile_name }}" ]; then
+            echo "Running tests on ${{ env.pyfile_name }}"
+            # Replace the following line with the actual command to run your tests
+            python -m unittest discover -s tests -p "${{ env.pyfile_name }}"
+          else
+            echo "No Python files changed."
+          fi
       - name: Read and Transform Python File Content
         id: transform_to_json
         run: |
