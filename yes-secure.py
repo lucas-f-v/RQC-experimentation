@@ -1,7 +1,7 @@
 def sum_two_numbers(a, b):
     return a + b
 
-# Example usaged
+# Example usagedd
 if __name__ == "__main__":
     num1 = 5
     num2 = 3
