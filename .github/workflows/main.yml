@@ -17,17 +17,18 @@ jobs:
       - name: Get Python file name
         id: get_pyfile
         run: |
-          # Get the commit hash of the previous commit
-          prev_commit=$(git rev-parse HEAD~1)
-      
-          # Get the list of changed files between the previous commit and the current commit
-          files=$(git diff --name-only $prev_commit HEAD)
-      
+          # Get the list of files in the current commit
+          files=$(git diff --name-only --cached)
+
           # Filter for Python files and extract the name
           pyfile_name=$(echo "$files" | grep -E '\.py$' | head -n 1)
-      
+
           # Set the output
           echo "pyfile_name=$pyfile_name" >> $GITHUB_ENV
+
+      - name: Output Python file name
+        run: |
+          echo "The name of the Python file committed is: ${{ env.pyfile_name }}"
       - name: Read and Transform Python File Content
         id: transform_to_json
         run: |
