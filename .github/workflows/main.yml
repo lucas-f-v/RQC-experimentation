@@ -41,6 +41,9 @@ jobs:
       
           # Store the Python file name in the environment variable
           echo "pyfile_name=$pyfile_name" >> $GITHUB_ENV
+      - name: Showing discrepancies
+        run: |
+          git diff --name-only HEAD~1 HEAD
       - name: Read and Transform Python File Content
         id: transform_to_json
         run: |
