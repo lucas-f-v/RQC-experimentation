@@ -18,7 +18,7 @@ jobs:
         id: get_pyfile
         run: |
           # Get the list of files in the current commit
-          files=$(git diff --name-only --cached)
+          files=$(git diff --name-only)
           echo "files: $files"
 
           # Filter for Python files and extract the name
