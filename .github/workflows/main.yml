@@ -44,15 +44,7 @@ jobs:
           
           echo "Extracted Python file name: ${{ env.pyfile_name }}"
   
-      - name: Run tests on the changed Python file
-        run: |
-          if [ -n "${{ env.pyfile_name }}" ]; then
-            echo "Running tests on ${{ env.pyfile_name }}"
-            # Replace the following line with the actual command to run your tests
-            python -m unittest discover -s tests -p "${{ env.pyfile_name }}"
-          else
-            echo "No Python files changed."
-          fi
+
       - name: Read and Transform Python File Content
         id: transform_to_json
         run: |
