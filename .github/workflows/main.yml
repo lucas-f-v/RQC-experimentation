@@ -22,6 +22,7 @@ jobs:
 
           # Filter for Python files and extract the name
           pyfile_name=$(echo "$files" | grep -E '\.py$' | head -n 1)
+          echo "pyfile_name is $pyfile_name"
 
           # Set the output
           echo "pyfile_name=$pyfile_name" >> $GITHUB_ENV
