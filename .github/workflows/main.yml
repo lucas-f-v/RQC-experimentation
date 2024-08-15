@@ -68,11 +68,11 @@ jobs:
       - name: Get Bearer Token
         id: get_token
         run: |
-          response=$(curl --location --request POST 'https://idm.stackspot.com/${{ secrets.CLIENT_REALM }}/oidc/oauth/token' \
+          response=$(curl --location --request POST 'https://idm.stackspot.com/${{ secrets.STK_CLIENT_REALM }}/oidc/oauth/token' \
           --header 'Content-Type: application/x-www-form-urlencoded' \
-          --data-urlencode 'client_id=${{ secrets.CLIENT_ID }}' \
+          --data-urlencode 'client_id=${{ secrets.STK_CLIENT_ID }}' \
           --data-urlencode 'grant_type=client_credentials' \
-          --data-urlencode 'client_secret=${{ secrets.CLIENT_SECRET }}')
+          --data-urlencode 'client_secret=${{ secrets.STK_CLIENT_SECRET }}')
           echo "response=$response"
           token=$(echo $response | grep -oP '(?<="access_token":")[^"]*')
           echo "::set-output name=token::$token"
